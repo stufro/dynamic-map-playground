@@ -14,10 +14,10 @@ var incidentIcon = L.icon({
     popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
 });
 
-L.marker([51.5, -0.15], {icon: incidentIcon}).addTo(map);
-L.marker([52.62, 1.3], {icon: incidentIcon}).addTo(map);
-L.marker([52.03, -0.77], {icon: incidentIcon}).addTo(map);
-L.marker([51.55, -0.28], {icon: incidentIcon}).addTo(map);
+L.marker([51.51, -0.15], {icon: incidentIcon, start: "15/05/21 15:32", reference: "542272", location: "Pilgrimage Street", circuits: 7, customers: 52}).addTo(map);
+L.marker([52.62, 1.301], {icon: incidentIcon, start: "15/05/21 15:32", reference: "834514", location: "Carrow Road", circuits: 11, customers: 70}).addTo(map);
+L.marker([52.03, -0.77], {icon: incidentIcon, start: "15/05/21 15:32", reference: "153484", location: "Milton Keynes", circuits: 25, customers: 93}).addTo(map);
+L.marker([51.55, -0.28], {icon: incidentIcon, start: "15/05/21 15:32", reference: "743266", location: "Wembley Stadium", circuits: 2, customers: 7}).addTo(map);
 
 var leafletIDs = [];
 map.eachLayer(function (layer) { 
@@ -35,10 +35,23 @@ var intervalID = window.setInterval(function() {
         if (layer._leaflet_id == leafletIDs[currentIndex]) {
             leafletIDs.push(layer._leaflet_id)
             map.flyTo([layer._latlng.lat, layer._latlng.lng], 12);
+
+            map.once("moveend zoomend", function() {
+            L.popup({closeButton: false})
+                .setLatLng([layer._latlng.lat - 0.02, layer._latlng.lng + 0.06])
+                .setContent(
+                    `<h4>${layer.options.reference}</h4>
+                    <p><b>Location: </b>${layer.options.location}</p>
+                    <p><b>Start Time: </b>${layer.options.start}</p>
+                    <p><b>Description: </b>Loss of service to ${layer.options.circuits} circuits</p>
+                    <p><b>Impacted Customers: </b>${layer.options.customers}</p>`
+                )
+            .openOn(map);
+    })
         } 
     });
     markerIndex += 1;
-}, 5000);
+}, 10000);
 
 // store map and incidentIcon to be used later in the channel when broadcast is received
 window.incidentMap = map;
