@@ -6,4 +6,6 @@
 import Rails from "@rails/ujs"
 import "channels"
 
+import('styles/light');
+
 Rails.start()
