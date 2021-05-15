@@ -8,5 +8,6 @@ import "channels"
 import('incident-map');
 
 import('styles/light');
+import('styles/incident-map');
 
 Rails.start()
