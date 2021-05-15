@@ -2,6 +2,9 @@
 
 Example cobbled-together project using leaflet.js and ActionCable. When new data is broadcast using ActionCable, a marker is added to the map, the view flys to the marker and a popup appears next to the marker.
 
+![Demo](leaflet-fly-to.gif)
+
+
 ### Requirements
 * Ruby 2.7
 * Rails 6
