@@ -14,4 +14,8 @@ var incidentIcon = L.icon({
 });
 
 var marker = L.marker([51.5, -0.09], {icon: incidentIcon}).addTo(map);
+// var marker = L.marker([51.5, -0.15], {icon: incidentIcon}).addTo(map);
 marker.bindPopup("<b>Hello world!</b><br>I am a popup.")
+
+window.incidentMap = map;
+window.incidentIcon = incidentIcon;
