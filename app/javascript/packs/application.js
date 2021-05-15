@@ -5,6 +5,7 @@
 
 import Rails from "@rails/ujs"
 import "channels"
+import('incident-map');
 
 import('styles/light');
 
