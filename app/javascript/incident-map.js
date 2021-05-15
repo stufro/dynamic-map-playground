@@ -14,7 +14,32 @@ var incidentIcon = L.icon({
     popupAnchor:  [0, -15] // point from which the popup should open relative to the iconAnchor
 });
 
-// var marker = L.marker([51.5, -0.15], {icon: incidentIcon}).addTo(map);
+L.marker([51.5, -0.15], {icon: incidentIcon}).addTo(map);
+L.marker([52.62, 1.3], {icon: incidentIcon}).addTo(map);
+L.marker([52.03, -0.77], {icon: incidentIcon}).addTo(map);
+L.marker([51.55, -0.28], {icon: incidentIcon}).addTo(map);
 
+var leafletIDs = [];
+map.eachLayer(function (layer) { 
+    if (layer.options.icon) {
+        leafletIDs.push(layer._leaflet_id)
+    } 
+});
+
+// loop over markers, flying to each one in turn
+var markerIndex = 0;
+var intervalID = window.setInterval(function() {
+    var currentIndex = markerIndex % leafletIDs.length;
+
+    map.eachLayer(function (layer) { 
+        if (layer._leaflet_id == leafletIDs[currentIndex]) {
+            leafletIDs.push(layer._leaflet_id)
+            map.flyTo([layer._latlng.lat, layer._latlng.lng], 12);
+        } 
+    });
+    markerIndex += 1;
+}, 5000);
+
+// store map and incidentIcon to be used later in the channel when broadcast is received
 window.incidentMap = map;
 window.incidentIcon = incidentIcon;
